@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,10 +28,15 @@ Route::get('/info', static function () {
     return "Some information";
 });
 
-Route::get('/news', function () {
-    return "All News";
+//Admin
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], static function(){
+    Route::resource('/categories', AdminCategoryController::class);
+    Route::resource('/news', AdminNewsController::class);
 });
 
-Route::get('/news/{id}', function (string $id) {
-    return "Specific news with ID: $id";
-});
+//News
+Route::get('/news', [NewsController::class, 'index'])
+    ->name('news.index');
+Route::get('/news/{id}', [NewsController::class, 'show'])
+    ->where('id', '\d+')
+    ->name('news.show');

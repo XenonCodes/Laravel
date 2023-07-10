@@ -1,0 +1,12 @@
+<h2>News List</h2>
+<?php foreach($newsList as $news): ?>
+    <div>
+        <h4><a href="<?=route('news.show', ['id' => $news['id']])?><?=$news['id']?>"><?=$news['title']?></a></h4>
+        <br>
+        <img src="<?=$news['img']?>">
+        <p><em><?=$news['author']?></em> &nbsp; (<?=$news['created_at']?>)</p>
+        <p><?=$news['description']?></p>
+    </div>
+    <hr>
+<?php endforeach; ?>
+
