@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,17 +18,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Welcom
+Route::get('/', [WelcomeController::class, 'index'])
+    ->name('welcome');
 
-Route::get('/hello/{name}', static function (string $name) {
-    return "Hello, $name";
-});
-
-Route::get('/info', static function () {
-    return "Some information";
-});
+//Category
+Route::get('/categories', [CategoryController::class, 'index'])
+    ->name('categories.index');
+Route::get('/categories/{id}', [CategoryController::class, 'show'])
+    ->where('id', '\d+')
+    ->name('categories.show');
 
 //Admin
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], static function(){
@@ -37,6 +38,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], static function(){
 //News
 Route::get('/news', [NewsController::class, 'index'])
     ->name('news.index');
-Route::get('/news/{id}', [NewsController::class, 'show'])
+Route::get('/news/{id}/{categories_id}', [NewsController::class, 'show'])
     ->where('id', '\d+')
+    ->where('categories_id', '\d+')
     ->name('news.show');
+
