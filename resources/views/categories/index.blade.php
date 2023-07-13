@@ -6,9 +6,9 @@
 <body>
     <h1>News Categories</h1>
     <ul>
-        <?php foreach($categories as $category):?>
-            <li><a href="<?=route('categories.show', ['id' => $category['id']])?>"><?=$category['name']?></a></li>
-        <?php endforeach; ?>
+        @foreach($categories as $category)
+            <li><a href="{{route('categories.show', ['id' => $category['id']])}}">{{$category['name']}}</a></li>
+        @endforeach
     </ul>
 </body>
 </html>

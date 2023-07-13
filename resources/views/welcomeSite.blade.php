@@ -6,8 +6,8 @@
 <body>
     <h1>Welcome to News Aggregator</h1>
     <p>This is a future news aggregator website.</p>
-    <a href="<?=route('news.index')?>">News</a>
+    <a href="{{route('news.index')}}">News</a>
     <br>
-    <a href="<?=route('categories.index')?>">News Categories</a>
+    <a href="{{route('categories.index')}}">News Categories</a>
 </body>
 </html>
