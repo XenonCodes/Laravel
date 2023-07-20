@@ -11,7 +11,7 @@
 
         <div class="col">
             <div class="card shadow-sm">
-                <h4><a href="{{route('news.show', ['id' => $news['id'],'categories_id' => $categories['id']])}}">{{$news['title']}}</a></h4>
+                <h4><a href="{{route('news.show', ['id' => $news['id'],'categories_id' => $categories['id']])}}" class="btn btn-secondary my-2">{{$news['title']}}</a></h4>
                 <img src="{{$news['img']}}">
 
                 <div class="card-body">

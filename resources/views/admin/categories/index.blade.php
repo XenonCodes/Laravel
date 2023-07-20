@@ -4,7 +4,7 @@
         <h1 class="h2">Categories list</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
-                <a type="button" class="btn btn-sm btn-outline-secondary">Add categories</a>
+                <a href="{{route('admin.categories.create')}}" class="btn btn-sm btn-outline-secondary">Add categories</a>
             </div>
         </div>
     </div>
