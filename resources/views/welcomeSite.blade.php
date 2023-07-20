@@ -1,13 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Welcome to News Aggregator</title>
-</head>
-<body>
+@extends('layouts.main')
+@section('content')
+
     <h1>Welcome to News Aggregator</h1>
     <p>This is a future news aggregator website.</p>
-    <a href="<?=route('news.index')?>">News</a>
+    <a href="{{route('news.index')}}" class="btn btn-primary btn-lg px-4 gap-3 mb-2">News</a>
     <br>
-    <a href="<?=route('categories.index')?>">News Categories</a>
-</body>
-</html>
+    <a href="{{route('categories.index')}}" class="btn btn-primary btn-lg px-4 gap-3">News Categories</a>
+
+@endsection
