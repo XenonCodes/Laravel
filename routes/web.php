@@ -45,3 +45,8 @@ Route::get('/news/{id}/{categories_id}', [NewsController::class, 'show'])
     ->where('categories_id', '\d+')
     ->name('news.show');
 
+//Test
+Route::get('/test', function(\Illuminate\Http\Request $request) {
+    return response()->download('robots.txt');
+});
+
