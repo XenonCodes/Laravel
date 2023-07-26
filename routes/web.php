@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\IndexController as AdminController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], static function(){
     Route::resource('/categories', AdminCategoryController::class);
     Route::resource('/news', AdminNewsController::class);
 });
+
+//Order
+Route::get('/order-form',[OrderController::class, 'showForm'])->name('order-form.showForm');
+Route::post('/order-form', [OrderController::class, 'processForm'])->name('order-form.processForm');
+
 
 //News
 Route::get('/news', [NewsController::class, 'index'])
