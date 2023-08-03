@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -13,8 +14,10 @@ class CategoryController extends Controller
      */
     public function index(): View
     {
+        $categories = app(Category::class);
+
         return view('admin.categories.index', [
-            'categories' => $this->getNewsCategories(),
+            'categories' => $categories->getAll(),
         ]);
     }
 

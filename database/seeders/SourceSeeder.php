@@ -5,27 +5,28 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CategorySeeder extends Seeder
+class SourceSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        \DB::table('categories')->insert($this->getData());
+        \DB::table('sources')->insert($this->getData());
     }
 
     public function getData(): array
     {
-        $quantityCategories = 10;
-        $categories = [];
-        for ($i=0; $i < $quantityCategories; $i++) {
-            $categories[] = [
+        $quantitySources = 10;
+        $sources = [];
+        for ($i=0; $i < $quantitySources; $i++) {
+            $sources[] = [
                 'name' => fake()->jobTitle(),
+                'URL' => fake()->url(),
                 'created_at' => now(),
             ];
         }
 
-        return $categories;
+        return $sources;
     }
 }

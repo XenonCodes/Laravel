@@ -14,14 +14,17 @@ return new class extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained('categories')
-                ->cascadeOnDelete();
-
             $table->string('title', 255);
             $table->text('description')->nullable();
-            $table->string('author', 100)->default('Admin');
             $table->string('image', 255)->nullable();
+            $table->string('author', 100)->default('Admin');
             $table->enum('status', Status::getEnums());
+            $table->foreignId('category_id')
+                ->constrained('categories')
+                ->cascadeOnDelete();
+            $table->foreignId('source_id')
+                ->constrained('sources')
+                ->cascadeOnDelete();
             $table->timestamps();
 
             $table->index('status');
