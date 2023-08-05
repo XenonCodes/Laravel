@@ -14,10 +14,8 @@ class CategoryController extends Controller
      */
     public function index(): View
     {
-        $categories = app(Category::class);
-
         return view('admin.categories.index', [
-            'categories' => $categories->getAll(),
+            'categories' => Category::all(),
         ]);
     }
 
