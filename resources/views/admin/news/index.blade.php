@@ -38,7 +38,13 @@
                         <td> {{ $news->author }}</td>
                         <td> {{ $news->status }}</td>
                         <td> {{ $news->created_at }}</td>
-                        <td> <a href="{{ route('admin.news.edit', ['news' => $news]) }}">Edit</a> &nbsp; <a href="">Delete</a> </td>
+                        <td> <a href="{{ route('admin.news.edit', ['news' => $news]) }}">Edit</a> &nbsp;
+                            <form action="{{ route('admin.news.destroy', ['news' => $news]) }}" method="post" class="d-inline">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn btn-link">Delete</button>
+                            </form>
+                        </td>
                     </tr>
                 @empty
                     <tr>

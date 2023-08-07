@@ -60,7 +60,7 @@ class NewsController extends Controller
      */
     public function show(News $news)
     {
-        return response()->json($this->getNews(), 200);
+        //
     }
 
     /**
@@ -97,8 +97,12 @@ class NewsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(News $news)
     {
-        //
+        if ($news->delete()) {
+            return redirect()->route('admin.news.index')->with('success', 'The record was deleted successfully');
+        }
+
+        return back()->with('error', 'Record not found');
     }
 }

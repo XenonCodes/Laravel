@@ -1,12 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Categories list</h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <div class="btn-group me-2">
-                <a href="{{route('admin.categories.create')}}" class="btn btn-sm btn-outline-secondary">Add categories</a>
-            </div>
-        </div>
+        <h1 class="h2">Order list</h1>
     </div>
 
     <div class="table-responsive">
@@ -15,17 +10,24 @@
             <thead>
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Name</th>
-                <th scope="col">Action</th>
+                <th scope="col">name</th>
+                <th scope="col">phone</th>
+                <th scope="col">email</th>
+                <th scope="col">information</th>
+                <th scope="col">Created at</th>
             </tr>
             </thead>
             <tbody>
-                @forelse($categories as $category)
+                @forelse($orders as $order)
                     <tr>
-                        <td> {{ $category->id }}</td>
-                        <td> {{ $category->name }}</td>
-                        <td> <a href="{{ route('admin.categories.edit', ['category' => $category]) }}">Edit</a>
-                            <form action="{{ route('admin.categories.destroy', ['category' => $category]) }}" method="post" class="d-inline">
+                        <td> {{ $order->id }}</td>
+                        <td> {{ $order->name }}</td>
+                        <td> {{ $order->phone }}</td>
+                        <td> {{ $order->email }}</td>
+                        <td> {{ $order->information }}</td>
+                        <td> {{ $order->created_at }}</td>
+                        <td> <a href="{{ route('admin.orders.edit', ['order' => $order]) }}">Edit</a> &nbsp;
+                            <form action="{{ route('admin.orders.destroy', ['order' => $order]) }}" method="post" class="d-inline">
                                 @csrf
                                 @method('delete')
                                 <button type="submit" class="btn btn-link">Delete</button>
@@ -39,6 +41,5 @@
                 @endforelse
             </tbody>
         </table>
-        {{ $categories->links() }}
     </div>
 @endsection

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -10,10 +11,10 @@ class OrderController extends Controller
 {
     public function showForm(): View
     {
-        return view('order_form');
+        return view('orders.order_form');
     }
 
-    public function processForm(Request $request): View
+    public function processForm(Request $request): mixed
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
@@ -29,8 +30,13 @@ class OrderController extends Controller
             'information' => $validatedData['information'],
         ];
 
-        Storage::append('orders.txt', json_encode($dataToSave));
+        $order = new Order($dataToSave);
 
-        return view('order-confirmation');
+        if($order->save()) {
+            Storage::append('orders.txt', json_encode($dataToSave));
+            return view('orders.order-confirmation');
+        }
+
+        return back()->with('error', 'Failed to add entry');
     }
 }
