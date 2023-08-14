@@ -10,11 +10,19 @@
     </div>
 
     <div class="table-responsive">
+        @include('inc.message')
+        <span>Status Filter:</span>&nbsp;
+        <select  id="filter">
+            <option> {{ \App\Enums\News\Status::DRAFT->value }} </option>
+            <option> {{ \App\Enums\News\Status::ACTIVE->value }} </option>
+            <option> {{ \App\Enums\News\Status::BLOCKED->value }} </option>
+        </select>&nbsp; <button class="btn small filter_btn">Ok</button>
         <table class="table table-striped table-sm">
             <thead>
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Title</th>
+                <th scope="col">Category</th>
                 <th scope="col">Author</th>
                 <th scope="col">Status</th>
                 <th scope="col">Created at</th>
@@ -26,10 +34,17 @@
                     <tr>
                         <td> {{ $news->id }}</td>
                         <td> {{ $news->title }}</td>
+                        <td> {{ $news->category->name }}</td>
                         <td> {{ $news->author }}</td>
                         <td> {{ $news->status }}</td>
                         <td> {{ $news->created_at }}</td>
-                        <td> <a href="">Edit</a> &nbsp; <a href="">Delete</a> </td>
+                        <td> <a href="{{ route('admin.news.edit', ['news' => $news]) }}">Edit</a> &nbsp;
+                            <form action="{{ route('admin.news.destroy', ['news' => $news]) }}" method="post" class="d-inline">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn btn-link">Delete</button>
+                            </form>
+                        </td>
                     </tr>
                 @empty
                     <tr>
@@ -38,5 +53,18 @@
                 @endforelse
             </tbody>
         </table>
+
+        {{ $newsList->links() }}
     </div>
 @endsection
+@push('js')
+    <script>
+        document.addEventListener("DOMContentLoaded", function (){
+            document.querySelector(".filter_btn").addEventListener("click", function (){
+                let filter = document.getElementById("filter").value;
+                console.dir(filter);
+                location.href = "?f=" + filter;
+            });
+        });
+    </script>
+@endpush

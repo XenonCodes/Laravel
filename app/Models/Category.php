@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 
 class Category extends Model
@@ -12,13 +14,18 @@ class Category extends Model
 
     protected $table = 'categories';
 
-    public function getAll(): Collection
+    protected $fillable = [
+        'name',
+    ];
+
+    public function scopeStatus(Builder $query): Builder
     {
-        return \DB::table($this->table)->get();
+        return $query;
     }
 
-    public function getItemById(int $id): mixed
+    public function news(): HasMany
     {
-        return \DB::table($this->table)->find($id);
+        return $this->hasMany(News::class, 'category_id');
     }
+
 }

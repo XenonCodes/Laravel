@@ -11,21 +11,16 @@ class CategoryController extends Controller
 {
     public function index(): View
     {
-        $categories = app(Category::class);
-
         return view('categories.index', [
-            'categories' => $categories->getAll(),
+            'categories' => Category::all(),
         ]);
     }
 
     public function show(int $id): View
     {
-        $categories = app(Category::class);
-        $news = News::where('category_id', $id)->get();
-
         return view('categories.show', [
-            'categories' => $categories->getItemById($id),
-            'newsList' => $news,
+            'categories' => Category::find($id),
+            'newsList' => News::where('category_id', $id)->get(),
         ]);
     }
 }

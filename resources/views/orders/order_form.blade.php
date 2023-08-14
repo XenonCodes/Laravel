@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @section('content')
+    @include('inc.message')
     <h1>Order form for receiving data upload</h1>
     <form action=" {{route('order-form.showForm')}} " method="POST">
         @csrf

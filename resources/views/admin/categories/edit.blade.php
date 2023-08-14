@@ -10,11 +10,12 @@
                 <x-alert :message="$error" type="danger"></x-alert>
             @endforeach
         @endif
-        <form method="post" action=" {{route('admin.categories.store')}} ">
+        <form method="post" action=" {{route('admin.categories.update', ['category' => $category])}} ">
             @csrf
+            @method('PUT')
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" class="form-control" name="name" id="name" value=" {{old('name')}} ">
+                <input type="text" class="form-control" name="name" id="name" value=" {{ $category->name }} ">
             </div>
             <br>
             <button type="submit" class="btn btn-success">Save</button>
