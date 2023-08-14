@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -13,8 +14,10 @@ class NewsController extends Controller
      */
     public function index(): View
     {
+        $news = app(News::class);
+
         return view('admin.news.index', [
-            'newsList' => $this->getNews(),
+            'newsList' => $news->getAll(),
         ]);
     }
 
