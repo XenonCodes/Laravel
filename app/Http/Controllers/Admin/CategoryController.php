@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Categories\Create;
+use App\Http\Requests\Admin\Categories\Edit;
 use App\Models\Category;
 use App\Models\News;
 use App\Models\Source;
@@ -32,21 +34,15 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Create $request)
     {
-        $request->validate([
-            'name' => 'required',
-        ]);
-
-        $data = $request->only(['name',]);
-
-        $category = new Category($data);
+        $category = new Category($request->validated());
 
         if($category->save()) {
-            return redirect()->route('admin.categories.index')->with('success', 'The record was saved successfully');
+            return redirect()->route('admin.categories.index')->with('success', __('The record was saved successfully'));
         }
 
-        return back()->with('error', 'Failed to add entry');
+        return back()->with('error', __('We can not save item, pleas try again'));
     }
 
     /**
@@ -70,17 +66,15 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(Edit $request, Category $category)
     {
-        $data = $request->only(['name',]);
-
-        $category->fill($data);
+        $category->fill($request->validated());
 
         if($category->save()) {
-            return redirect()->route('admin.categories.index')->with('success', 'The record was saved successfully');
+            return redirect()->route('admin.categories.index')->with('success', __('The record was saved successfully'));
         }
 
-        return back()->with('error', 'Failed to add entry');
+        return back()->with('error', __('The record was saved successfully'));
     }
 
     /**
@@ -89,7 +83,7 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         if ($category->delete()) {
-            return redirect()->route('admin.categories.index')->with('success', 'The record was deleted successfully');
+            return redirect()->route('admin.categories.index')->with('success', __('The record was deleted successfully'));
         }
 
         return back()->with('error', 'Record not found');

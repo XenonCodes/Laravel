@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Admin\Categories;
+namespace App\Http\Requests\Admin\Orders;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,7 +22,10 @@ class Create extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'min:3', 'max:150'],
+            'name' => ['required', 'string','min:2', 'max:150'],
+            'phone' => ['required', 'string', 'max:20'],
+            'email' => ['required', 'email', 'max:150'],
+            'information' => ['required', 'string', 'min:20', 'max:100'],
         ];
     }
 }

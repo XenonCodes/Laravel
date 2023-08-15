@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Admin\Orders\Create;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -14,29 +15,15 @@ class OrderController extends Controller
         return view('orders.order_form');
     }
 
-    public function processForm(Request $request): mixed
+    public function processForm(Create $request): mixed
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'phone' => 'required|string|max:20',
-            'email' => 'required|email|max:255',
-            'information' => 'required|string',
-        ]);
-
-        $dataToSave = [
-            'name' => $validatedData['name'],
-            'phone' => $validatedData['phone'],
-            'email' => $validatedData['email'],
-            'information' => $validatedData['information'],
-        ];
-
-        $order = new Order($dataToSave);
+        $order = new Order($request->validated());
 
         if($order->save()) {
-            Storage::append('orders.txt', json_encode($dataToSave));
-            return view('orders.order-confirmation');
+            Storage::append('orders.txt', json_encode($request->validated()));
+            return view('orders.order-confirmation')->with('success', __('The record was saved successfully'));
         }
 
-        return back()->with('error', 'Failed to add entry');
+        return back()->with('error', __('We can not save item, pleas try again'));
     }
 }
