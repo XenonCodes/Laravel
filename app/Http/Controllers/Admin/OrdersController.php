@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Orders\Edit;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -56,22 +57,15 @@ class OrdersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Order $order)
+    public function update(Edit $request, Order $order)
     {
-        $data = $request->only([
-            'name',
-            'phone',
-            'email',
-            'information'
-        ]);
-
-        $order->fill($data);
+        $order->fill($request->validated());
 
         if($order->save()) {
-            return redirect()->route('admin.orders.index')->with('success', 'The record was saved successfully');
+            return redirect()->route('admin.orders.index')->with('success', __('The record was saved successfully'));
         }
 
-        return back()->with('error', 'Failed to add entry');
+        return back()->with('error', __('We can not save item, pleas try again'));
     }
 
     /**
@@ -80,9 +74,9 @@ class OrdersController extends Controller
     public function destroy(Order $order)
     {
         if ($order->delete()) {
-            return redirect()->route('admin.orders.index')->with('success', 'The record was deleted successfully');
+            return redirect()->route('admin.orders.index')->with('success', __('The record was deleted successfully'));
         }
 
-        return back()->with('error', 'Record not found');
+        return back()->with('error', __('Record not found'));
     }
 }
