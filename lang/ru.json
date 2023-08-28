@@ -3,5 +3,13 @@
     "The record was saved successfully": "Запись была успешно сохранена",
     "We can not save item, pleas try again": "Не удалось сохранить запись",
     "The record was deleted successfully": "Запись была успешно удалена",
-    "Record not found": "Запись не найдена"
+    "Record not found": "Запись не найдена",
+    "Login": "Вход",
+    "Email Address": "Email Адрес",
+    "Password": "Пароль",
+    "Confirm Password": "Подтвердите пароль",
+    "Remember Me": "Запомнить меня",
+    "Register": "Регистрация",
+    "Name": "Имя",
+    "Forgot Your Password?": "Забыли пароль?"
 }
