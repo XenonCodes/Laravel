@@ -15,6 +15,7 @@
                 <th scope="col">email</th>
                 <th scope="col">information</th>
                 <th scope="col">Created at</th>
+                <th scope="col">Action</th>
             </tr>
             </thead>
             <tbody>
