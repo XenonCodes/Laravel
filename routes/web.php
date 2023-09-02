@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Account\IndexController as AccountController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\IndexController as AdminController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\OrdersController as AdminOrdersController;
+use App\Http\Controllers\Admin\UsersController as AdminUsersController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\OrderController;
@@ -25,6 +27,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [WelcomeController::class, 'index'])
     ->name('welcome');
 
+/*
+Route::get('/', function () {
+    return view('welcome');
+});
+*/
+
 //Category
 Route::get('/categories', [CategoryController::class, 'index'])
     ->name('categories.index');
@@ -32,16 +40,22 @@ Route::get('/categories/{id}', [CategoryController::class, 'show'])
     ->where('id', '\d+')
     ->name('categories.show');
 
-//Admin
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], static function(){
-    Route::get('/', AdminController::class)->name('index');
-    Route::resource('/categories', AdminCategoryController::class);
-    Route::resource('/news', AdminNewsController::class);
-    Route::resource('/orders', AdminOrdersController::class);
+
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/account', AccountController::class)->name('account');
+    //Admin
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'is.admin'], static function () {
+        Route::get('/', AdminController::class)->name('index');
+        Route::resource('/categories', AdminCategoryController::class);
+        Route::resource('/news', AdminNewsController::class);
+        Route::resource('/orders', AdminOrdersController::class);
+        Route::resource('/users', AdminUsersController::class);
+    });
 });
 
 //Order
-Route::get('/order-form',[OrderController::class, 'showForm'])->name('order-form.showForm');
+Route::get('/order-form', [OrderController::class, 'showForm'])->name('order-form.showForm');
 Route::post('/order-form', [OrderController::class, 'processForm'])->name('order-form.processForm');
 
 
@@ -54,7 +68,22 @@ Route::get('/news/{id}/{categories_id}', [NewsController::class, 'show'])
     ->name('news.show');
 
 //Test
-Route::get('/test', function(\Illuminate\Http\Request $request) {
+Route::get('/test', function (\Illuminate\Http\Request $request) {
     return response()->download('robots.txt');
 });
 
+//Session
+Route::get('/session', function () {
+    $key = 'test';
+
+    if (session()->has($key)) {
+        // session()->forget($key);
+        dd(session()->all(), session()->get($key));
+    }
+
+    session()->put($key, 'Some value');
+});
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
