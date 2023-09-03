@@ -7,7 +7,8 @@
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
                 <div class="card-body text-center">
-                    <a href="{{ route('social-providers.redirect', ['driver' => 'vkontakte']) }}" class="btn btn-primary ">Login via VK</a>
+                    <a href="{{ route('social-providers.redirect', ['driver' => 'vkontakte']) }}" class="btn btn-primary ">VK</a>
+                    <a href="{{ route('social-providers.redirect', ['driver' => 'github']) }}" class="btn btn-primary ">GitHub</a>
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
