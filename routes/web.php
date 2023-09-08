@@ -5,10 +5,12 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\IndexController as AdminController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\OrdersController as AdminOrdersController;
+use App\Http\Controllers\Admin\ParserController;
 use App\Http\Controllers\Admin\UsersController as AdminUsersController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\SocialProvidersController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -47,6 +49,7 @@ Route::group(['middleware' => 'auth'], function () {
     //Admin
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'is.admin'], static function () {
         Route::get('/', AdminController::class)->name('index');
+        Route::get('/parser', ParserController::class)->name('parser');
         Route::resource('/categories', AdminCategoryController::class);
         Route::resource('/news', AdminNewsController::class);
         Route::resource('/orders', AdminOrdersController::class);
@@ -66,6 +69,19 @@ Route::get('/news/{id}/{categories_id}', [NewsController::class, 'show'])
     ->where('id', '\d+')
     ->where('categories_id', '\d+')
     ->name('news.show');
+
+
+// Guests routes
+
+Route::group(['middleware' => 'guest'], function () {
+    Route::get('/{driver}/redirect', [SocialProvidersController::class, 'redirect'])
+        ->where('driver', '\w+')
+        ->name('social-providers.redirect');
+
+    Route::get('/{driver}/callback', [SocialProvidersController::class, 'callback'])
+        ->where('driver', '\w+')
+        ->name('social-providers.callback');
+});
 
 //Test
 Route::get('/test', function (\Illuminate\Http\Request $request) {
