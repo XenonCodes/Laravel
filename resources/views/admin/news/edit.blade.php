@@ -41,7 +41,11 @@
             </div>
             <div class="form-group">
                 <label for="image">Image</label>
-                <img src="{{ Storage::disk('public')->url($news->image) }}" style="width:300px;" />
+                @if(filter_var($news->image, FILTER_VALIDATE_URL))
+                    <img src="{{ $news->image }}" style="width:300px;" class="p-3">
+                @else
+                    <img src="{{ Storage::disk('public')->url($news->image) }}" style="width:300px; height: 200px;" class="p-3">
+                @endif
                 <input type="file" class="form-control" name="image" id="image">
             </div>
             <div class="form-group">

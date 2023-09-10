@@ -43,7 +43,13 @@ class NewsController extends Controller
      */
     public function store(Create $request)
     {
-        $news = new News($request->validated());
+        $validatedData = $request->validated();
+
+        if (!$request->hasFile('image')) {
+            $validatedData['image'] = 'news/default.jpg';
+        }
+    
+        $news = new News($validatedData);
 
         if($news->save()) {
             return redirect()->route('admin.news.index')->with('success', __('News was saved successfully'));
@@ -80,8 +86,6 @@ class NewsController extends Controller
      */
     public function update(Edit $request, News $news, Upload $upload)
     {
-
-        //dd($request->hasFile('image'));
         $validated = $request->validated();
         if ($request->hasFile('image')) {
             $validated['image'] = $upload->create($request->file('image'));
