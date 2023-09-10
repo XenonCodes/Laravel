@@ -11,7 +11,7 @@
                 <div class="col">
                     <div class="card shadow-sm">
                         <h4><a href="{{route('news.show', ['id' => $news->id,'categories_id' => $category->id])}}" class="btn btn-secondary my-2">{{$news->title}}</a></h4>
-                        <img src="{{$news->image}}">
+                        <img src="{{ Storage::disk('public')->url($news->image) }}" style="width:300px;">
 
                         <div class="card-body">
                             <p class="card-text">{{$news->description}}</p>

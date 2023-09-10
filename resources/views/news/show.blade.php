@@ -3,7 +3,7 @@
 <h2>{{$news->title}}</h2>
 <p>Categories: {{$categories->name}}</p>
 <div>
-    <img src="{{$news->image}}">
+    <img src="{{ Storage::disk('public')->url($news->image) }}" style="width:600px;" alt="{{$news->image}}">
     <p><em>{{$news->author}}</em> &nbsp; ({{$news->created_at}})</p>
     <p>{{$news->description}}</p>
 </div>
