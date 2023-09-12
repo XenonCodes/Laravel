@@ -5,8 +5,9 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\IndexController as AdminController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\OrdersController as AdminOrdersController;
-use App\Http\Controllers\Admin\ParserController;
+use App\Http\Controllers\Admin\ResourcesController as AdminResourcesController;
 use App\Http\Controllers\Admin\UsersController as AdminUsersController;
+use App\Http\Controllers\Admin\ParserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\OrderController;
@@ -54,6 +55,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/news', AdminNewsController::class);
         Route::resource('/orders', AdminOrdersController::class);
         Route::resource('/users', AdminUsersController::class);
+        Route::resource('/resources', AdminResourcesController::class);
     });
 });
 

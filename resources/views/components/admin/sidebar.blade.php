@@ -8,6 +8,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link @if(request()->routeIs('admin.resources.*')) active @endif" href="{{route('admin.resources.index')}}">
+                    <span data-feather="download-cloud"></span>
+                    Resources
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link @if(request()->routeIs('admin.categories.*')) active @endif" href="{{route('admin.categories.index')}}">
                     <span data-feather="folder"></span>
                     Categories
