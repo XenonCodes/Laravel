@@ -23,6 +23,7 @@
                 <th scope="col">ID</th>
                 <th scope="col">Title</th>
                 <th scope="col">Category</th>
+                <th scope="col">Source</th>
                 <th scope="col">Author</th>
                 <th scope="col">Status</th>
                 <th scope="col">Created at</th>
@@ -35,6 +36,7 @@
                         <td> {{ $news->id }}</td>
                         <td> {{ $news->title }}</td>
                         <td> {{ $news->category->name }}</td>
+                        <td> {{ $news->source->name }}</td>
                         <td> {{ $news->author }}</td>
                         <td> {{ $news->status }}</td>
                         <td> {{ $news->created_at }}</td>

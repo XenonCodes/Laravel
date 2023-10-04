@@ -10,7 +10,7 @@
                 <x-alert :message="$error" type="danger"></x-alert>
             @endforeach
         @endif
-        <form method="post" action=" {{ route('admin.news.update', ['news' => $news]) }} ">
+        <form method="post" action=" {{ route('admin.news.update', ['news' => $news]) }} " enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="form-group">
@@ -40,7 +40,12 @@
                 @error('author') <strong style="color:red; font-weight: bold">{{ $message }}</strong> @enderror
             </div>
             <div class="form-group">
-                <label for="image">Author</label>
+                <label for="image">Image</label>
+                @if(filter_var($news->image, FILTER_VALIDATE_URL))
+                    <img src="{{ $news->image }}" style="width:300px;" class="p-3">
+                @else
+                    <img src="{{ Storage::disk('public')->url($news->image) }}" style="width:300px; height: 200px;" class="p-3">
+                @endif
                 <input type="file" class="form-control" name="image" id="image">
             </div>
             <div class="form-group">
@@ -60,3 +65,13 @@
         </form>
     </div>
 @endsection
+
+@push('js')
+    <script>
+        ClassicEditor
+            .create( document.querySelector( '#description' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+@endpush

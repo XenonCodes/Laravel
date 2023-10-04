@@ -25,7 +25,7 @@ class Edit extends FormRequest
     {
         return [
             'category_id' => ['required', 'integer', 'exists:categories,id'],
-            'sourse_id' => ['required', 'integer', 'exists:sourses,id'],
+            'source_id' => ['required', 'integer', 'exists:sources,id'],
             'title' => ['required', 'string', 'min:3', 'max:150'],
             'author' => ['required', 'string', 'min:2', 'max:100'],
             'image' => ['nullable', 'image'],

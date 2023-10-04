@@ -9,10 +9,13 @@
         @forelse($newsList as $news)
             @if ($news->category_id === $category->id)
                 <div class="col">
-                    <div class="card shadow-sm">
+                    <div class="card shadow-sm p-3">
                         <h4><a href="{{route('news.show', ['id' => $news->id,'categories_id' => $category->id])}}" class="btn btn-secondary my-2">{{$news->title}}</a></h4>
-                        <img src="{{$news->image}}">
-
+                        @if(filter_var($news->image, FILTER_VALIDATE_URL))
+                            <img src="{{ $news->image }}" style="width:300px;">
+                        @else
+                            <img src="{{ Storage::disk('public')->url($news->image) }}" style="width:300px; height: 200px;">
+                        @endif
                         <div class="card-body">
                             <p class="card-text">{{$news->description}}</p>
                             <div class="d-flex justify-content-between align-items-center">
